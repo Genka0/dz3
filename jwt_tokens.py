@@ -1,15 +1,18 @@
 import jwt
 import datetime
 
-def create_token(payload, key='pass'): #створення токену
-    payload['exp'] = datetime.datetime.utcnow() + datetime.timedelta(seconds=60)
+DEFAULT_EXPIRATION_SECONDS = 60
+ALGORITHM = 'HS256'
+
+def create_token(payload, key='pass', expiration_seconds=DEFAULT_EXPIRATION_SECONDS): #створення токену
+    payload['exp'] = datetime.datetime.utcnow() + datetime.timedelta(seconds=expiration_seconds)
     return jwt.encode(
         payload=payload,
         key=key,
-        algorithm='HS256',
+        algorithm=ALGORITHM,
     )
 
-def is_token_expired(token, password): #перервірка на дійсність 
+def is_token_expired(token, password): #перевірка на дійсність 
     try:
         decoded = jwt.decode(token, password, algorithms=['HS256'])
         exp = decoded.get('exp', 0)
