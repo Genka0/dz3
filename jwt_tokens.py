@@ -12,7 +12,7 @@ def create_token(payload, key='pass', expiration_seconds=DEFAULT_EXPIRATION_SECO
         algorithm=ALGORITHM,
     )
 
-def is_token_expired(token, password): #перервірка на дійсність 
+def is_token_expired(token, password): #перевірка на дійсність 
     try:
         decoded = jwt.decode(token, password, algorithms=['HS256'])
         exp = decoded.get('exp', 0)
